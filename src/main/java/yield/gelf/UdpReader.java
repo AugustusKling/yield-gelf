@@ -5,7 +5,10 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.Arrays;
 
+import javax.annotation.Nonnull;
+
 import yield.core.EventQueue;
+import yield.core.EventType;
 import yield.input.network.ConnectionFailed;
 
 /**
@@ -20,6 +23,8 @@ public class UdpReader extends EventQueue<byte[]> {
 	private static final int MAX_UDP_PAYLOAD = 65507;
 
 	public UdpReader(final int port) {
+		super(byte[].class);
+
 		new Thread() {
 			@Override
 			public void run() {
@@ -40,5 +45,11 @@ public class UdpReader extends EventQueue<byte[]> {
 				}
 			};
 		}.start();
+	}
+
+	@Override
+	@Nonnull
+	public EventType getOutputType() {
+		return new EventType(byte[].class);
 	}
 }

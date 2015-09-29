@@ -21,6 +21,8 @@ import yield.input.network.ConnectionFailed;
  */
 public class TcpReader extends EventQueue<byte[]> {
 	public TcpReader(final InetSocketAddress listeningAddress) {
+		super(byte[].class);
+
 		new Thread() {
 			@Override
 			public void run() {
@@ -141,4 +143,5 @@ public class TcpReader extends EventQueue<byte[]> {
 			};
 		}.start();
 	}
+
 }

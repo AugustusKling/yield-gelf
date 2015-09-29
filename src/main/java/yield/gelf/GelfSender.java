@@ -4,6 +4,8 @@ import java.net.InetSocketAddress;
 import java.util.Calendar;
 import java.util.Map.Entry;
 
+import javax.annotation.Nonnull;
+
 import org.graylog2.gelfclient.GelfConfiguration;
 import org.graylog2.gelfclient.GelfMessage;
 import org.graylog2.gelfclient.GelfMessageBuilder;
@@ -13,6 +15,7 @@ import org.graylog2.gelfclient.transport.GelfTransport;
 
 import yield.core.BaseControlQueueProvider;
 import yield.core.EventListener;
+import yield.core.EventType;
 import yield.input.ListenerExceutionFailed;
 import yield.input.ListenerExecutionAborted;
 import yield.json.JsonEvent;
@@ -112,5 +115,11 @@ public class GelfSender extends BaseControlQueueProvider implements
 								"Buffer queue exceeded maximum size."));
 			}
 		}
+	}
+
+	@Override
+	@Nonnull
+	public EventType getInputType() {
+		return new EventType(JsonEvent.class);
 	}
 }

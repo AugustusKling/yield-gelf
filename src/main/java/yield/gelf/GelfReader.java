@@ -12,8 +12,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Nonnull;
+
 import yield.core.EventListener;
 import yield.core.EventSource;
+import yield.core.EventType;
 import yield.gelf.types.ChunkedMessage;
 import yield.gelf.types.GelfMessage;
 import yield.gelf.types.MessageId;
@@ -112,5 +115,11 @@ public class GelfReader extends EventSource<JsonEvent> implements
 			// Yield message of received packet.
 			feedBoundQueues(new JsonEvent(gelfMessage.getBody()));
 		}
+	}
+
+	@Override
+	@Nonnull
+	public EventType getInputType() {
+		return new EventType(byte[].class);
 	}
 }
